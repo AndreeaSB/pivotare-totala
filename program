@@ -1,0 +1,77 @@
+#include <iostream>
+#include <math.h>
+#include <conio.h>
+using namespace std;
+
+
+int main() {
+
+
+	int n,p,q,k;
+	double a[50][50], max,t;  
+
+	cout << "n=";
+	cin >> n;
+
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			cout << "a[" << i << "][" << j << "]=";
+			cin >> a[i][j];
+		}
+	}
+
+	for ( k = 1; k <= n - 1; k++) {
+		cout << k << endl;
+		max = 0;
+		for (int i = k; i <= n; i++) {
+			for (int j = k; j <= n; j++) {
+				if (max < abs(a[i][j])) {
+					max = abs(a[i][j]);
+					p = i;
+					q = j;
+				}
+			}
+		}
+
+		if (a[p][q] != 0) {
+			if (p != k) {
+				for (int j = 1; j <= n; j++) {
+					t = a[k][j];
+					a[k][j] = a[p][j];
+					a[p][j] = t;
+				}
+			}
+			if (q != k) {
+				for (int i = 1; i <= n; i++) {
+					t = a[i][k];
+					a[i][k] = a[i][q];
+					a[i][q] = t; 
+				}
+			}
+			for (int i = k + 1; i <= n; i++) {
+				for (int j = k + 1; j <= n; j++) {
+					a[i][j] = a[i][j] - ((a[i][k] * a[k][j]) / a[k][k]);
+				}
+				a[i][k] = 0;
+			}
+		} else {
+			cout << "matricea a este superior triunghiulara";
+			for (int i = 1; i <= n  ; i++) {
+				for (int j = 1; j <= n; j++) {
+					cout << a[i][j] << "  ";
+				}
+				cout << endl;
+			}
+			k = n - 1; //oprim for-ul
+		}
+	}
+	for (int i = 1; i <= n; i++) {  //desi nu e in algoritm, cred ca ar trebui afisata matricea. pe exemplu nu imi afisa nimic si credeam ca gresi
+		for (int j = 1; j <= n; j++) {      //programul			
+			cout << a[i][j] << "  ";
+		}
+		cout << endl;
+	}
+
+  _getch();
+   return 0;
+}
